@@ -280,7 +280,7 @@ export const addYoutube = async (req, res) => {
     const myCloud = await cloudinary.v2.uploader.upload(image, {
       folder: "portfolio",
     });
-    user.youtube.unshift({
+    user.unshift({
       url,
       title,
       image: {
@@ -365,11 +365,11 @@ export const deleteYoutube = async (req, res) => {
 
     const user = await User.findById(req.user._id);
 
-    const video = user.youtube.find((video) => video._id == id);
+    const video = user.find((video) => video._id == id);
 
     await cloudinary.v2.uploader.destroy(video.image.public_id);
 
-    user.youtube = user.youtube.filter((video) => video._id != id);
+    // user = user.filter((video) => video._id != id);
 
     await user.save();
 
